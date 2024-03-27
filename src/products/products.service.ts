@@ -19,6 +19,10 @@ export class ProductsService {
     return this.prisma.product.findUnique({where:{id}});
   }
 
+  findByName(title: string) {
+    return this.prisma.product.findUnique({where:{title}});
+  }
+
   update(id: number, updateProductDto: UpdateProductDto) {
     return this.prisma.product.update({where:{id}, data: updateProductDto});
   }

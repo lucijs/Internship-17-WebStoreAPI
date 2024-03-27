@@ -29,6 +29,12 @@ export class ProductsController {
     return this.productsService.findOne(+id);
   }
 
+  @Get(':title')
+  @ApiOkResponse({type: ProductEntity})
+  findByName(@Param('title') title: string) {
+    return this.productsService.findByName(title);
+  }
+
   @Patch(':id')
   @ApiOkResponse({type: ProductEntity})
   update(@Param('id') id: string, @Body() updateProductDto: UpdateProductDto) {
