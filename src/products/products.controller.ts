@@ -12,7 +12,7 @@ export class ProductsController {
   constructor(private readonly productsService: ProductsService) {}
 
   @Post()
-  @ApiCreatedResponse({type: ProductsModule})
+  @ApiCreatedResponse({type: ProductEntity})
   create(@Body() createProductDto: CreateProductDto) {
     return this.productsService.create(createProductDto);
   }
