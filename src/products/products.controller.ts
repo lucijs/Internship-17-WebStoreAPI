@@ -29,7 +29,7 @@ export class ProductsController {
     return this.productsService.findOne(+id);
   }
 
-  @Get(':title')
+  @Get('byName/:title')
   @ApiOkResponse({type: ProductEntity})
   findByName(@Param('title') title: string) {
     return this.productsService.findByName(title);
