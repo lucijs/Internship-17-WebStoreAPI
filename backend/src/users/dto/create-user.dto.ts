@@ -1,33 +1,43 @@
 import { ApiProperty } from "@nestjs/swagger";
+import { IsEmail, IsMobilePhone, IsNumber, IsString } from "class-validator";
 
 export class CreateUserDto {
-    @ApiProperty()
-    username: string;
+  @ApiProperty()
+  @IsString()
+  username: string;
 
-    @ApiProperty()
-    email: string;
+  @ApiProperty()
+  @IsString()
+  password: string;
 
-    @ApiProperty()
-    password: string;
+  @ApiProperty()
+  @IsEmail()
+  email: string;
 
-    @ApiProperty()
-    firstName: string;
+  @ApiProperty()
+  @IsString()
+  firstName: string;
 
-    @ApiProperty()
-    lastName: string;
+  @ApiProperty()
+  @IsString()
+  lastName: string;
 
-    @ApiProperty()
-    cityAdress: string;
+  @ApiProperty()
+  @IsString()
+  cityAdress: string;
 
-    @ApiProperty()
-    streetAdress: string;
+  @ApiProperty()
+  @IsString()
+  streetAdress: string;
 
-    @ApiProperty()
-    numberAdress: string;
+  @ApiProperty()
+  @IsNumber()
+  numberAdress: string;
 
-    @ApiProperty()
-    phone: string;
+  @ApiProperty()
+  @IsMobilePhone()
+  phone: string;
 
-    @ApiProperty({default: false})
-    isAdmin?: boolean;
+  @ApiProperty({default: false})
+  isAdmin?: boolean;
 }
