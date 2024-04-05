@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards, Req } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards, Req, ParseIntPipe } from '@nestjs/common';
 import { ProductsService } from './products.service';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
@@ -27,8 +27,8 @@ export class ProductsController {
 
   @Get(':id')
   @ApiOkResponse({type: ProductEntity})
-  findOne(@Param('id') id: string) {
-    return this.productsService.findOne(+id);
+  findOne(@Param('id', ParseIntPipe) id: number) {
+    return this.productsService.findOne(id);
   }
 
   @Get('byName/:title')
@@ -40,16 +40,16 @@ export class ProductsController {
   @UseGuards(AdminAuthGuard)
   @Patch(':id')
   @ApiOkResponse({type: ProductEntity})
-  update(@Req() {user}, @Param('id') id: string, @Body() updateProductDto: UpdateProductDto) {
+  update(@Req() {user}, @Param('id', ParseIntPipe) id: number, @Body() updateProductDto: UpdateProductDto) {
     console.log('User from products controller patch',user);
-    return this.productsService.update(+id, updateProductDto);
+    return this.productsService.update(id, updateProductDto);
   }
 
   @UseGuards(AdminAuthGuard)
   @Delete(':id')
   @ApiOkResponse({type: ProductEntity})
-  remove(@Req() {user}, @Param('id') id: string) {
+  remove(@Req() {user}, @Param('id', ParseIntPipe) id: number) {
     console.log('User from products controller delete',user);
-    return this.productsService.remove(+id);
+    return this.productsService.remove(id);
   }
 }

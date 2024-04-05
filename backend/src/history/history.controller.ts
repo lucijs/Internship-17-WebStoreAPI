@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards, Req } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards, Req, ParseIntPipe } from '@nestjs/common';
 import { HistoryService } from './history.service';
 import { CreateHistoryDto } from './dto/create-history.dto';
 import { UpdateHistoryDto } from './dto/update-history.dto';
@@ -29,21 +29,21 @@ export class HistoryController {
   @UseGuards(UserAuthGuard)
   @Get(':id')
   @ApiOkResponse({type: HistoryEntity})
-  findOne(@Param('id') id: string) {
-    return this.historyService.findOne(+id);
+  findOne(@Param('id', ParseIntPipe) id: number) {
+    return this.historyService.findOne(id);
   }
 
   @UseGuards(AdminAuthGuard)
   @Patch(':id')
   @ApiOkResponse({type: HistoryEntity})
-  update(@Param('id') id: string, @Body() updateHistoryDto: UpdateHistoryDto) {
-    return this.historyService.update(+id, updateHistoryDto);
+  update(@Param('id', ParseIntPipe) id: number, @Body() updateHistoryDto: UpdateHistoryDto) {
+    return this.historyService.update(id, updateHistoryDto);
   }
 
   @UseGuards(AdminAuthGuard)
   @Delete(':id')
   @ApiOkResponse({type: HistoryEntity})
-  remove(@Param('id') id: string) {
-    return this.historyService.remove(+id);
+  remove(@Param('id', ParseIntPipe) id: number) {
+    return this.historyService.remove(id);
   }
 }

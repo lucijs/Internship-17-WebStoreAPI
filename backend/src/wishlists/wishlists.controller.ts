@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards, Req } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards, Req, ParseIntPipe } from '@nestjs/common';
 import { WishlistsService } from './wishlists.service';
 import { CreateWishlistDto } from './dto/create-wishlist.dto';
 import { UpdateWishlistDto } from './dto/update-wishlist.dto';
@@ -29,21 +29,21 @@ export class WishlistsController {
   @UseGuards(UserAuthGuard)
   @Get(':id')
   @ApiOkResponse({type: WishlistEntity})
-  findOne(@Param('id') id: string) {
-    return this.wishlistsService.findOne(+id);
+  findOne(@Param('id',ParseIntPipe) id: number) {
+    return this.wishlistsService.findOne(id);
   }
 
   @UseGuards(UserAuthGuard)
   @Patch(':id')
   @ApiOkResponse({type: WishlistEntity})
-  update(@Param('id') id: string, @Body() updateWishlistDto: UpdateWishlistDto) {
-    return this.wishlistsService.update(+id, updateWishlistDto);
+  update(@Param('id', ParseIntPipe) id: number, @Body() updateWishlistDto: UpdateWishlistDto) {
+    return this.wishlistsService.update(id, updateWishlistDto);
   }
 
   @UseGuards(UserAuthGuard)
   @Delete(':id')
   @ApiOkResponse({type: WishlistEntity})
-  remove(@Param('id') id: string) {
-    return this.wishlistsService.remove(+id);
+  remove(@Param('id', ParseIntPipe) id: number) {
+    return this.wishlistsService.remove(id);
   }
 }
