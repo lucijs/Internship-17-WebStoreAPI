@@ -9,11 +9,7 @@ export class ProductsService {
   constructor(private prisma: PrismaService){}
 
   create(createProductDto: CreateProductDto) {
-    console.log("Price value:", createProductDto.price);
-    console.log("Price type:", typeof(createProductDto.price));
     const decimalPrice = new Decimal(createProductDto.price);
-
-    // Create the product in the database
     return this.prisma.product.create({
       data: {
         ...createProductDto,
