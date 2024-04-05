@@ -30,18 +30,20 @@ export class WishlistsController {
   @Get(':id')
   @ApiOkResponse({type: WishlistEntity})
   findOne(@Req() {user}) {
-    return this.wishlistsService.findOne(+user.id);
+    return this.wishlistsService.findOne(user.id);
   }
 
+  @UseGuards(UserAuthGuard)
   @Patch(':id')
   @ApiOkResponse({type: WishlistEntity})
-  update(@Param('id') id: string, @Body() updateWishlistDto: UpdateWishlistDto) {
-    return this.wishlistsService.update(+id, updateWishlistDto);
+  update(@Req() {user}, @Body() updateWishlistDto: UpdateWishlistDto) {
+    return this.wishlistsService.update(user.id, updateWishlistDto);
   }
 
+  @UseGuards(UserAuthGuard)
   @Delete(':id')
   @ApiOkResponse({type: WishlistEntity})
-  remove(@Param('id') id: string) {
-    return this.wishlistsService.remove(+id);
+  remove(@Req() {user}) {
+    return this.wishlistsService.remove(user.id);
   }
 }

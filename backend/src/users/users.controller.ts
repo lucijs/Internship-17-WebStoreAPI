@@ -37,20 +37,20 @@ export class UsersController {
   @Get(':id')
   @ApiOkResponse({type: UserEntity})
   findOne(@Req() {user}) {
-    return this.usersService.findOne(+user.id);
+    return this.usersService.findOne(user.id);
   }
 
   @UseGuards(UserAuthGuard)
   @Patch(':id')
   @ApiOkResponse({type: UserEntity})
   update(@Req() {user}, @Body() updateUserDto: UpdateUserDto) {
-    return this.usersService.update(+user.id, updateUserDto);
+    return this.usersService.update(user.id, updateUserDto);
   }
 
   @UseGuards(UserAuthGuard)
   @Delete(':id')
   @ApiOkResponse({type: UserEntity})
   remove(@Req() {user}) {
-    return this.usersService.remove(+user.id);
+    return this.usersService.remove(user.id);
   }
 }
