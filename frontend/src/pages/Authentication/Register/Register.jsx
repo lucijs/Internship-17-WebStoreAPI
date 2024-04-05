@@ -1,31 +1,39 @@
-import { FormControl, FormHelperText, IconButton, InputAdornment, InputLabel, OutlinedInput, TextField } from "@mui/material";
-import classes from "./index.module.css";
+import {
+  FormControl,
+  IconButton,
+  InputAdornment,
+  InputLabel,
+  OutlinedInput,
+  TextField,
+} from '@mui/material';
+import classes from './index.module.css';
+import React from 'react';
+import Visibility from '@mui/icons-material/Visibility';
+import VisibilityOff from '@mui/icons-material/VisibilityOff';
 
 const Register = () => {
+  const [showPassword, setShowPassword] = React.useState(false);
+
+  const handleClickShowPassword = () => setShowPassword((show) => !show);
+
+  const handleMouseDownPassword = (event) => {
+    event.preventDefault();
+  };
   return (
-    <div>
-        Doslovno bilo šta
-        <TextField
-          label="With normal TextField"
-          id="outlined-start-adornment"
-          sx={{ m: 1, width: '25ch' }}
-          InputProps={{
-            startAdornment: <InputAdornment position="start">kg</InputAdornment>,
-          }}
-        />
+    <div className={classes.container}>
+      <TextField label="Username" sx={{ m: 1, width: '25ch' }} />
+      <TextField label="Email" sx={{ m: 1, width: '25ch' }} />
+      <TextField label="First name" sx={{ m: 1, width: '25ch' }} />
+      <TextField label="Last name" sx={{ m: 1, width: '25ch' }} />
+      <TextField label="City" sx={{ m: 1, width: '25ch' }} />
+      <TextField label="Street name" sx={{ m: 1, width: '25ch' }} />
+      <TextField label="Street number" sx={{ m: 1, width: '25ch' }} />
+      <TextField label="Phone number" sx={{ m: 1, width: '25ch' }} />
+      <div>
         <FormControl sx={{ m: 1, width: '25ch' }} variant="outlined">
-          <OutlinedInput
-            id="outlined-adornment-weight"
-            endAdornment={<InputAdornment position="end">kg</InputAdornment>}
-            aria-describedby="outlined-weight-helper-text"
-            inputProps={{
-              'aria-label': 'weight',
-            }}
-          />
-          <FormHelperText id="outlined-weight-helper-text">Weight</FormHelperText>
-        </FormControl>
-        <FormControl sx={{ m: 1, width: '25ch' }} variant="outlined">
-          <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
+          <InputLabel htmlFor="outlined-adornment-password">
+            Password
+          </InputLabel>
           <OutlinedInput
             id="outlined-adornment-password"
             type={showPassword ? 'text' : 'password'}
@@ -44,14 +52,7 @@ const Register = () => {
             label="Password"
           />
         </FormControl>
-        <FormControl fullWidth sx={{ m: 1 }}>
-          <InputLabel htmlFor="outlined-adornment-amount">Amount</InputLabel>
-          <OutlinedInput
-            id="outlined-adornment-amount"
-            startAdornment={<InputAdornment position="start">$</InputAdornment>}
-            label="Amount"
-          />
-        </FormControl>
+      </div>
     </div>
   );
 };
