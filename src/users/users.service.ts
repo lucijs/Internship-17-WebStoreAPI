@@ -1,7 +1,7 @@
 import {
   BadRequestException,
   ForbiddenException,
-  Injectable,
+  Injectable
 } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { compare, hash } from 'bcrypt';
@@ -13,7 +13,7 @@ import { UpdateUserDto } from './dto/update-user.dto';
 export class UsersService {
   constructor(private prisma: PrismaService, private readonly jwtService: JwtService,){}
 
-  async register(username: string, password: string,email:string, firstName:string, lastName:string,cityAdress:string, streetAdress:string,numberAdress:string,phone:string) {
+  async register(username: string, password: string,email:string, firstName:string, lastName:string,cityAdress:string, streetAdress:string,numberAdress:string,phone:string, isAdmin: boolean | null) {
     const existingUser = await this.prisma.user.findUnique({
       where: {
         username,
@@ -36,14 +36,15 @@ export class UsersService {
         cityAdress,
         streetAdress,
         numberAdress,
-        phone
+        phone,
+        isAdmin
       },
     });
 
     const payload = {
       id: user.id,
       username: user.username,
-      role: 'user',
+      role: "user"
     };
 
     return {
@@ -63,19 +64,15 @@ export class UsersService {
     }
 
     const isPasswordValid = await compare(password, user.password);
-    console.log(user);
+
     if (!isPasswordValid) {
-      console.log(user);
-      console.log(password);
-      console.log(user.password===password)
-      console.log(isPasswordValid)
       throw new ForbiddenException('Password not valid');
     }
 
     const payload = {
       id: user.id,
       username: user.username,
-      role: user.isAdmin ? 'admin' : 'user',
+      role: 'user',
     };
 
     return {
