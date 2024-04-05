@@ -17,4 +17,3 @@ export class CartEntity implements Cart {
     @ApiProperty()
     dateCreated: Date;
 }
-

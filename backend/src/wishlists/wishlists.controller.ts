@@ -29,21 +29,21 @@ export class WishlistsController {
   @UseGuards(UserAuthGuard)
   @Get(':id')
   @ApiOkResponse({type: WishlistEntity})
-  findOne(@Req() {user}) {
-    return this.wishlistsService.findOne(user.id);
+  findOne(@Param('id') id: string) {
+    return this.wishlistsService.findOne(+id);
   }
 
   @UseGuards(UserAuthGuard)
   @Patch(':id')
   @ApiOkResponse({type: WishlistEntity})
-  update(@Req() {user}, @Body() updateWishlistDto: UpdateWishlistDto) {
-    return this.wishlistsService.update(user.id, updateWishlistDto);
+  update(@Param('id') id: string, @Body() updateWishlistDto: UpdateWishlistDto) {
+    return this.wishlistsService.update(+id, updateWishlistDto);
   }
 
   @UseGuards(UserAuthGuard)
   @Delete(':id')
   @ApiOkResponse({type: WishlistEntity})
-  remove(@Req() {user}) {
-    return this.wishlistsService.remove(user.id);
+  remove(@Param('id') id: string) {
+    return this.wishlistsService.remove(+id);
   }
 }
