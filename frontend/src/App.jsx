@@ -4,6 +4,7 @@ import ProductPage from "./pages/ProductPage";
 import NotFoundPage from "./pages/NotFoundPage";
 import { Route, Routes } from "react-router-dom";
 import ProductsLayout from "./components/ProductsLayout";
+import Register from "./pages/Authentication/Register";
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
           <Route path=":id" element={<ProductPage />} />
         </Route>
         <Route path="*" element={<NotFoundPage />} />
+        <Route path="/users/register" element={<Register />} />
       </Routes>
     </div>
   );
