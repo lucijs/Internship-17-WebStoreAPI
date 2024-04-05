@@ -63,14 +63,18 @@ export class UsersService {
     }
 
     const isPasswordValid = await compare(password, user.password);
-
+    console.log(user);
     if (!isPasswordValid) {
+      console.log(user);
+      console.log(password);
+      console.log(user.password===password)
+      console.log(isPasswordValid)
       throw new ForbiddenException('Password not valid');
     }
 
     const payload = {
       id: user.id,
-      email: user.email,
+      username: user.username,
       role: user.isAdmin ? 'admin' : 'user',
     };
 
