@@ -15,7 +15,7 @@ export class ProductsController {
   @Post()
   @ApiCreatedResponse({type: ProductEntity})
   create( @Req() {user}, @Body() createProductDto: CreateProductDto) {
-    console.log('User from products controller',user);
+    console.log('User from products controller post',user);
     return this.productsService.create(createProductDto);
   }
 
@@ -37,15 +37,19 @@ export class ProductsController {
     return this.productsService.findByName(title);
   }
 
+  @UseGuards(AdminAuthGuard)
   @Patch(':id')
   @ApiOkResponse({type: ProductEntity})
-  update(@Param('id') id: string, @Body() updateProductDto: UpdateProductDto) {
+  update(@Req() {user}, @Param('id') id: string, @Body() updateProductDto: UpdateProductDto) {
+    console.log('User from products controller patch',user);
     return this.productsService.update(+id, updateProductDto);
   }
 
+  @UseGuards(AdminAuthGuard)
   @Delete(':id')
   @ApiOkResponse({type: ProductEntity})
-  remove(@Param('id') id: string) {
+  remove(@Req() {user}, @Param('id') id: string) {
+    console.log('User from products controller delete',user);
     return this.productsService.remove(+id);
   }
 }
