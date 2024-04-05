@@ -13,7 +13,7 @@ import { UpdateUserDto } from './dto/update-user.dto';
 export class UsersService {
   constructor(private prisma: PrismaService, private readonly jwtService: JwtService,){}
 
-  async register(username: string, password: string,email:string, firstName:string, lastName:string,cityAdress:string, streetAdress:string,numberAdress:string,phone:string, isAdmin: boolean | null) {
+  async register(username: string, password: string,email:string, firstName:string, lastName:string,cityAdress:string, streetAdress:string,numberAdress:string,phone:string) {
     const existingUser = await this.prisma.user.findUnique({
       where: {
         username,
@@ -36,8 +36,7 @@ export class UsersService {
         cityAdress,
         streetAdress,
         numberAdress,
-        phone,
-        isAdmin
+        phone
       },
     });
 

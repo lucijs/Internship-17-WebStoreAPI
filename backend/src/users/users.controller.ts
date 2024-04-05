@@ -13,8 +13,8 @@ export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
   @Post('register')
-  register(@Body() { username, password, email, firstName, lastName, cityAdress, streetAdress, numberAdress, phone, isAdmin }: RegisterDto) {
-    return this.usersService.register(username, password, email, firstName, lastName, cityAdress, streetAdress, numberAdress, phone, isAdmin);
+  register(@Body() { username, password, email, firstName, lastName, cityAdress, streetAdress, numberAdress, phone}: RegisterDto) {
+    return this.usersService.register(username, password, email, firstName, lastName, cityAdress, streetAdress, numberAdress, phone);
   }
 
   @Post('login')
@@ -52,5 +52,3 @@ export class UsersController {
     return this.usersService.remove(+id);
   }
 }
-
-

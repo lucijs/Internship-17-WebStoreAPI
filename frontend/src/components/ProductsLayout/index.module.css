@@ -1,0 +1,39 @@
+.searchBar {
+  display: flex;
+  justify-content: space-around;
+  margin-left: 10vw;
+  margin-right: 10vw;
+  background-color: #fdcd00;
+  height: 80px;
+  align-items: center;
+}
+
+.searchBar form {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  width: 90%;
+}
+
+.input {
+  width: 75%;
+}
+
+.searchBar button {
+  height: 40px;
+  background-color: rgb(242, 242, 242);
+  color: rgba(0, 0, 0, 0.7);
+}
+
+.searchBar button:hover {
+  background-color: rgb(242, 242, 242);
+}
+
+.logo {
+  display: flex;
+  background-color: rgb(242, 242, 242);
+  margin-left: 10vw;
+  margin-right: 10vw;
+  margin-top: 30px;
+  justify-content: flex-start;
+}

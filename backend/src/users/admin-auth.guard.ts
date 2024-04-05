@@ -10,8 +10,7 @@ export class AdminAuthGuard extends AuthGuard('jwt') {
     }
 
     const { user } = await context.switchToHttp().getRequest();
-    console.log('admin', user);
-    console.log(user.role === 'admin')
+
     return user.role === 'admin';
   }
 }

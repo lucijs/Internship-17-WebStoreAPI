@@ -15,7 +15,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
 
   async validate(payload: any) {
     const user = await this.usersService.findOne(payload.id); 
-    console.log(user)
+
     if (user && user.isAdmin) {
       payload.role = 'admin';
     } else {

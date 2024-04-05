@@ -1,0 +1,32 @@
+.container {
+  height: 320px;
+  width: 300px;
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-radius: 10px;
+  border: 1px solid #fdcd00;
+  text-decoration: none;
+}
+
+
+.container:hover {
+  color: #fdcf00;
+}
+
+.container h4 {
+  font-family: "IBM Plex Sans", -apple-system, BlinkMacSystemFont, "Segoe UI",
+    Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji",
+    "Segoe UI Emoji", "Segoe UI Symbol";
+  font-weight: 400;
+  margin-left: 5%;
+  margin-right: 5%;
+  width: fit-content;
+}
+
+.image {
+  max-width: 180px;
+  max-height: 200px;
+  object-fit: contain;
+}

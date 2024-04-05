@@ -1,0 +1,75 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-left: 10vw;
+  margin-right: 10vw;
+}
+
+.product {
+  margin-top: 50px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  background-color: white;
+  border-radius: 10px;
+  border: 1px solid #fdcd00;
+}
+
+.product h2,
+p {
+  font-family: "IBM Plex Sans", -apple-system, BlinkMacSystemFont, "Segoe UI",
+    Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji",
+    "Segoe UI Emoji", "Segoe UI Symbol";
+  font-weight: 400;
+  margin-left: 5%;
+  margin-right: 5%;
+  width: fit-content;
+}
+
+.product img {
+  max-width: 300px;
+  max-height: 350px;
+  object-fit: contain;
+}
+
+.youMightAlsoLike {
+  font-family: "IBM Plex Sans", -apple-system, BlinkMacSystemFont, "Segoe UI",
+    Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji",
+    "Segoe UI Emoji", "Segoe UI Symbol";
+  font-weight: 600;
+  margin-left: 5%;
+  margin-right: 5%;
+  width: fit-content;
+}
+
+.loader {
+  position: absolute;
+  top: 40vh;
+  border: 12px solid #f3f3f3;
+  border-radius: 50%;
+  border-top: 12px solid #fdcd00;
+  width: 80px;
+  height: 80px;
+  -webkit-animation: spin 2s linear infinite;
+  animation: spin 2s linear infinite;
+}
+
+@-webkit-keyframes spin {
+  0% {
+    -webkit-transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+  }
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
