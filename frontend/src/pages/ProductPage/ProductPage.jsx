@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router";
 import classes from "./index.module.css";
 import ProductsDisplay from "../../components/ProductsDisplay";
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 
 const ProductPage = () => {
   const { id } = useParams();
