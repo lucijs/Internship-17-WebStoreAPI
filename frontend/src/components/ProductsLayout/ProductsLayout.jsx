@@ -3,7 +3,8 @@ import { useEffect, useState } from "react";
 import classes from "./index.module.css";
 import logo from "../../assets/logo.png";
 import { Outlet } from "react-router";
-import { Link, useSearchParams, useNavigate } from "react-router-dom";
+import PersonIcon from "@mui/icons-material/Person";
+import { useSearchParams, useNavigate, Link } from "react-router-dom";
 
 const ProductsLayout = () => {
   const [searchInput, setSearchInput] = useState("");
@@ -20,6 +21,9 @@ const ProductsLayout = () => {
     <>
       <div className={classes.logo}>
         <img src={logo} />
+        <Link className={classes.icon} to={"users/login"}>
+          <PersonIcon />
+        </Link>
       </div>
       <div className={classes.searchBar}>
         <form>
