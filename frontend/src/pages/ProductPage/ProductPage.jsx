@@ -2,7 +2,8 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router";
 import classes from "./index.module.css";
 import ProductsDisplay from "../../components/ProductsDisplay";
-import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+import FavoriteIcon from "@mui/icons-material/Favorite";
 
 const ProductPage = () => {
   const { id } = useParams();
@@ -23,6 +24,14 @@ const ProductPage = () => {
     }
   }, [product]);
 
+  const addToCart = (e) => {
+    console.log("da");
+  };
+
+  const addToWishlist = (e) => {
+    console.log("daaaa");
+  };
+
   return (
     <>
       <div className={classes.container}>
@@ -33,6 +42,10 @@ const ProductPage = () => {
               <img src={product.image} alt={product.title} />
               <p>{product.description}</p>
               <p>{product.category}</p>
+              <div className={classes.icons}>
+                <ShoppingCartIcon onClick={addToCart} />
+                <FavoriteIcon onClick={addToWishlist} />
+              </div>
             </div>
             <h2 className={classes.youMightAlsoLike}>
               Moglo bi vam se svidjeti

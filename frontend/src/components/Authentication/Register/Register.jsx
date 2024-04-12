@@ -16,7 +16,7 @@ import Step from "@mui/material/Step";
 import StepLabel from "@mui/material/StepLabel";
 import Button from "@mui/material/Button";
 
-const steps = ["1. korak", "2. korak", "3. korak"];
+const steps = ["1.", "2.", "3."];
 
 const Register = () => {
   const [activeStep, setActiveStep] = React.useState(0);
@@ -44,8 +44,8 @@ const Register = () => {
             const stepProps = {};
             const labelProps = {};
             return (
-              <Step key={label} {...stepProps}>
-                <StepLabel {...labelProps}>{label}</StepLabel>
+              <Step key={label} {...stepProps} sx={{ fill: "#fdcd00" }}>
+                <StepLabel {...labelProps}></StepLabel>
               </Step>
             );
           })}

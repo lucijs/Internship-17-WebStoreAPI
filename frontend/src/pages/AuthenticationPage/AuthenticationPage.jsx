@@ -9,7 +9,7 @@ import classes from "./index.module.css";
 const AuthenticationPage = () => {
   const [value, setValue] = React.useState(0);
 
-  const handleChange = (event, newValue) => {
+  const handleChange = (newValue) => {
     setValue(newValue);
   };
 
@@ -22,9 +22,28 @@ const AuthenticationPage = () => {
           <Tabs
             value={value}
             onChange={handleChange}
-            aria-label="authentication tabs">
-            <Tab label="Log in" />
-            <Tab label="Register" />
+            aria-label="authentication tabs"
+            sx={{
+              "& .MuiTabs-indicator": {
+                backgroundColor: "#fdcd00",
+              },
+            }}>
+            <Tab
+              label="Log in"
+              sx={{
+                "&.Mui-selected": {
+                  color: "#fdcd00",
+                },
+              }}
+            />
+            <Tab
+              label="Register"
+              sx={{
+                "&.Mui-selected": {
+                  color: "#fdcd00",
+                },
+              }}
+            />
           </Tabs>
         </Box>
         {value === 0 && (

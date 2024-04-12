@@ -1,5 +1,5 @@
 import { Button, TextField } from "@mui/material";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import classes from "./index.module.css";
 import logo from "../../assets/logo.png";
 import { Outlet } from "react-router";
@@ -21,7 +21,7 @@ const ProductsLayout = () => {
     <>
       <div className={classes.logo}>
         <img src={logo} />
-        <Link className={classes.icon} to={"users/login"}>
+        <Link className={classes.icon} to={"/users"}>
           <PersonIcon />
         </Link>
       </div>

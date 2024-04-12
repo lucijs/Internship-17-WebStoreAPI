@@ -1,5 +1,5 @@
 .container {
-  height: 320px;
+  height: 350px;
   width: 300px;
   background-color: white;
   display: flex;
@@ -8,8 +8,8 @@
   border-radius: 10px;
   border: 1px solid #fdcd00;
   text-decoration: none;
+  position: relative;
 }
-
 
 .container:hover {
   color: #fdcf00;
@@ -29,4 +29,16 @@
   max-width: 180px;
   max-height: 200px;
   object-fit: contain;
+}
+
+.icons {
+  display: flex;
+  margin-top: 10px;
+  position: absolute;
+  bottom: 4px;
+}
+
+h4,
+.icons > * {
+  color: #fdcd00;
 }

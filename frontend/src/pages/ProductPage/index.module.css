@@ -4,6 +4,7 @@
   align-items: center;
   margin-left: 10vw;
   margin-right: 10vw;
+  position: relative;
 }
 
 .product {
@@ -54,6 +55,31 @@ p {
   height: 80px;
   -webkit-animation: spin 2s linear infinite;
   animation: spin 2s linear infinite;
+}
+
+.icons {
+  display: flex;
+  width: 60px;
+  justify-content: space-between;
+  position: absolute;
+  right: 8px;
+  top: 605px;
+}
+
+@media screen and (max-width: 1000px) {
+  .icons {
+    display: flex;
+    width: 60px;
+    justify-content: space-between;
+    position: absolute;
+    right: 8px;
+    top: 775px;
+  }
+}
+
+h4,
+.icons > * {
+  color: #fdcd00;
 }
 
 @-webkit-keyframes spin {
