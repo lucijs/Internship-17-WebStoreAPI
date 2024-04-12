@@ -4,11 +4,14 @@ import classes from "./index.module.css";
 import ProductsDisplay from "../../components/ProductsDisplay";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import FavoriteIcon from "@mui/icons-material/Favorite";
+import EditIcon from "@mui/icons-material/Edit";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 const ProductPage = () => {
   const { id } = useParams();
   const [product, setProduct] = useState(null);
   const [products, setProducts] = useState([]);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   useEffect(() => {
     fetch(`https://fakestoreapi.com/products/${id}`)
@@ -32,6 +35,14 @@ const ProductPage = () => {
     console.log("daaaa");
   };
 
+  const editProduct = (e) => {
+    console.log("editireaj");
+  };
+
+  const deleteProduct = (e) => {
+    console.log("brisssi");
+  };
+
   return (
     <>
       <div className={classes.container}>
@@ -43,6 +54,14 @@ const ProductPage = () => {
               <p>{product.description}</p>
               <p>{product.category}</p>
               <div className={classes.icons}>
+                {!isAuthenticated ? (
+                  <>
+                    <EditIcon onClick={editProduct} />
+                    <DeleteIcon onClick={deleteProduct} />
+                  </>
+                ) : (
+                  <></>
+                )}
                 <ShoppingCartIcon onClick={addToCart} />
                 <FavoriteIcon onClick={addToWishlist} />
               </div>

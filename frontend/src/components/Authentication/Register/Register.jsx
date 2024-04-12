@@ -45,7 +45,7 @@ const Register = () => {
             const labelProps = {};
             return (
               <Step key={label} {...stepProps} sx={{ fill: "#fdcd00" }}>
-                <StepLabel {...labelProps}></StepLabel>
+                <StepLabel {...labelProps}> </StepLabel>
               </Step>
             );
           })}
