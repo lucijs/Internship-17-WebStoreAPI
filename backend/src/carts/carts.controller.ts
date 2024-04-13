@@ -9,6 +9,8 @@ import {
   UseGuards,
   Req,
   ParseIntPipe,
+  NotAcceptableException,
+  NotFoundException,
 } from '@nestjs/common';
 import { CartsService } from './carts.service';
 import { CreateCartDto } from './dto/create-cart.dto';
@@ -34,54 +36,67 @@ export class CartsController {
   @ApiBearerAuth()
   @Post()
   @ApiCreatedResponse({ type: CartEntity })
-  create(@Body() createCartDto: CreateCartDto, @Req() { user }) {
-    return this.cartsService.create({ ...createCartDto, userId: user.id });
+  async create(@Body() createCartDto: CreateCartDto, @Req() { user }) {
+    const cart = await this.cartsService.create({
+      ...createCartDto,
+      userId: user.id,
+    });
+    if (!cart) {
+      throw new NotAcceptableException("Cart couldn't be added");
+    }
+    return cart;
   }
 
   @UseGuards(AdminAuthGuard)
   @ApiBearerAuth()
   @Get()
   @ApiOkResponse({ type: CartEntity, isArray: true })
-  findAll() {
-    return this.cartsService.findAll();
+  async findAll() {
+    const carts = await this.cartsService.findAll();
+    if (!carts) {
+      throw new NotFoundException("Carts don't exist.");
+    }
+    return carts;
   }
 
   @UseGuards(UserAuthGuard)
   @ApiBearerAuth()
   @Get(':id')
   @ApiOkResponse({ type: CartEntity })
-  findOne(@Param('id', ParseIntPipe) id: number) {
-    return this.cartsService.findOne(id);
+  async findOne(@Param('id', ParseIntPipe) id: number) {
+    const cart = await this.cartsService.findOne(id);
+    if (!cart) {
+      throw new NotFoundException("Cart doesn't exist");
+    }
+    return cart;
   }
 
   @UseGuards(UserAuthGuard)
   @ApiBearerAuth()
   @Patch(':id')
   @ApiOkResponse({ type: CartEntity })
-  update(
+  async update(
     @Param('id', ParseIntPipe) id: number,
     @Body() updateCartDto: UpdateCartDto,
   ) {
     try {
-      const deletedHistory = await this.historyService.remove(id);
+      const deletedHistory = await this.cartsService.update(id, updateCartDto);
       return deletedHistory;
     } catch {
-      throw new NotFoundException("The history wasn't deleted.");
+      throw new NotFoundException("The cart wasn't updated.");
     }
-    return this.cartsService.update(id, updateCartDto);
   }
 
   @UseGuards(UserAuthGuard)
   @ApiBearerAuth()
   @Delete(':id')
   @ApiOkResponse({ type: CartEntity })
-  remove(@Param('id', ParseIntPipe) id: number) {
+  async remove(@Param('id', ParseIntPipe) id: number) {
     try {
-      const deletedHistory = await this.historyService.remove(id);
+      const deletedHistory = await this.cartsService.remove(id);
       return deletedHistory;
     } catch {
-      throw new NotFoundException("The history wasn't deleted.");
+      throw new NotFoundException("The cart wasn't deleted.");
     }
-    return this.cartsService.remove(id);
   }
 }
