@@ -9,6 +9,8 @@ import {
   UseGuards,
   Req,
   ParseIntPipe,
+  NotAcceptableException,
+  NotFoundException,
 } from '@nestjs/common';
 import { ProductsService } from './products.service';
 import { CreateProductDto } from './dto/create-product.dto';
@@ -31,48 +33,73 @@ export class ProductsController {
   @ApiBearerAuth()
   @Post()
   @ApiCreatedResponse({ type: ProductEntity })
-  create(@Req() { user }, @Body() createProductDto: CreateProductDto) {
-    console.log('User from products controller post', user);
-    return this.productsService.create(createProductDto);
+  async create(@Body() createProductDto: CreateProductDto) {
+    const product = await this.productsService.create(createProductDto);
+    if (!product) {
+      throw new NotAcceptableException('Check your input.');
+    }
+    return product;
   }
 
   @Get()
   @ApiOkResponse({ type: ProductEntity, isArray: true })
-  findAll() {
-    return this.productsService.findAll();
+  async findAll() {
+    const products = await this.productsService.findAll();
+    if (!products) {
+      throw new NotFoundException("Products don't exist");
+    }
+    return products;
   }
 
   @Get(':id')
   @ApiOkResponse({ type: ProductEntity })
-  findOne(@Param('id', ParseIntPipe) id: number) {
-    return this.productsService.findOne(id);
+  async findOne(@Param('id', ParseIntPipe) id: number) {
+    const product = await this.productsService.findOne(id);
+    if (!product) {
+      throw new NotFoundException("Product doesn't exist");
+    }
+    return product;
   }
 
   @Get('byName/:title')
   @ApiOkResponse({ type: ProductEntity })
-  findByName(@Param('title') title: string) {
-    return this.productsService.findByName(title);
+  async findByName(@Param('title') title: string) {
+    const product = await this.productsService.findByName(title);
+    if (!product) {
+      throw new NotFoundException("Product doesn't exist");
+    }
+    return product;
   }
 
   @UseGuards(AdminAuthGuard)
   @ApiBearerAuth()
   @Patch(':id')
   @ApiOkResponse({ type: ProductEntity })
-  update(
-    @Req() { user },
+  async update(
     @Param('id', ParseIntPipe) id: number,
     @Body() updateProductDto: UpdateProductDto,
   ) {
-    console.log('User from products controller patch', user);
-    return this.productsService.update(id, updateProductDto);
+    try {
+      const updatedUser = await this.productsService.update(
+        id,
+        updateProductDto,
+      );
+      return updatedUser;
+    } catch {
+      throw new NotFoundException("Product couldn't be updated.");
+    }
   }
 
   @UseGuards(AdminAuthGuard)
   @ApiBearerAuth()
   @Delete(':id')
   @ApiOkResponse({ type: ProductEntity })
-  remove(@Req() { user }, @Param('id', ParseIntPipe) id: number) {
-    console.log('User from products controller delete', user);
-    return this.productsService.remove(id);
+  async remove(@Req() { user }, @Param('id', ParseIntPipe) id: number) {
+    try {
+      const updatedUser = await this.productsService.remove(id);
+      return updatedUser;
+    } catch {
+      throw new NotFoundException("Product couldn't be deleted.");
+    }
   }
 }
