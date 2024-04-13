@@ -62,6 +62,12 @@ export class CartsController {
     @Param('id', ParseIntPipe) id: number,
     @Body() updateCartDto: UpdateCartDto,
   ) {
+    try {
+      const deletedHistory = await this.historyService.remove(id);
+      return deletedHistory;
+    } catch {
+      throw new NotFoundException("The history wasn't deleted.");
+    }
     return this.cartsService.update(id, updateCartDto);
   }
 
@@ -70,6 +76,12 @@ export class CartsController {
   @Delete(':id')
   @ApiOkResponse({ type: CartEntity })
   remove(@Param('id', ParseIntPipe) id: number) {
+    try {
+      const deletedHistory = await this.historyService.remove(id);
+      return deletedHistory;
+    } catch {
+      throw new NotFoundException("The history wasn't deleted.");
+    }
     return this.cartsService.remove(id);
   }
 }

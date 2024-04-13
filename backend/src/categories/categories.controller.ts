@@ -8,6 +8,8 @@ import {
   Delete,
   UseGuards,
   ParseIntPipe,
+  NotAcceptableException,
+  NotFoundException,
 } from '@nestjs/common';
 import { CategoriesService } from './categories.service';
 import { CreateCategoryDto } from './dto/create-category.dto';
@@ -30,38 +32,63 @@ export class CategoriesController {
   @ApiBearerAuth()
   @Post()
   @ApiCreatedResponse({ type: CategoryEntity })
-  create(@Body() createCategoryDto: CreateCategoryDto) {
-    return this.categoriesService.create(createCategoryDto);
+  async create(@Body() createCategoryDto: CreateCategoryDto) {
+    const category = await this.categoriesService.create(createCategoryDto);
+    if (!category) {
+      throw new NotAcceptableException("Category couldn't be added.");
+    }
+    return category;
   }
 
   @Get()
   @ApiOkResponse({ type: CategoryEntity, isArray: true })
-  findAll() {
-    return this.categoriesService.findAll();
+  async findAll() {
+    const categories = await this.categoriesService.findAll();
+    if (!categories) {
+      throw new NotFoundException("Categories don't exist.");
+    }
+    return categories;
   }
 
   @Get(':id')
   @ApiOkResponse({ type: CategoryEntity })
-  findOne(@Param('id', ParseIntPipe) id: number) {
-    return this.categoriesService.findOne(id);
+  async findOne(@Param('id', ParseIntPipe) id: number) {
+    const category = await this.categoriesService.findOne(id);
+    if (!category) {
+      throw new NotFoundException("This category doesn't exist");
+    }
+    return category;
   }
 
   @UseGuards(AdminAuthGuard)
   @ApiBearerAuth()
   @Patch(':id')
   @ApiOkResponse({ type: CategoryEntity })
-  update(
+  async update(
     @Param('id', ParseIntPipe) id: number,
     @Body() updateCategoryDto: UpdateCategoryDto,
   ) {
-    return this.categoriesService.update(id, updateCategoryDto);
+    try {
+      const deletedHistory = await this.categoriesService.update(
+        id,
+        updateCategoryDto,
+      );
+      return deletedHistory;
+    } catch {
+      throw new NotFoundException("The category wasn't updated.");
+    }
   }
 
   @UseGuards(AdminAuthGuard)
   @ApiBearerAuth()
   @Delete(':id')
   @ApiOkResponse({ type: CategoryEntity })
-  remove(@Param('id', ParseIntPipe) id: number) {
-    return this.categoriesService.remove(id);
+  async remove(@Param('id', ParseIntPipe) id: number) {
+    try {
+      const deletedHistory = await this.categoriesService.remove(id);
+      return deletedHistory;
+    } catch {
+      throw new NotFoundException("The category wasn't deleted.");
+    }
   }
 }
