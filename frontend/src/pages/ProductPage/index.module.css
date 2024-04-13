@@ -4,7 +4,6 @@
   align-items: center;
   margin-left: 10vw;
   margin-right: 10vw;
-  position: relative;
 }
 
 .product {
@@ -16,6 +15,7 @@
   background-color: white;
   border-radius: 10px;
   border: 1px solid #fdcd00;
+  position: relative;
 }
 
 .product h2,
@@ -63,7 +63,7 @@ p {
   justify-content: space-between;
   position: absolute;
   right: 37px;
-  top: 605px;
+  bottom: 0;
 }
 
 @media screen and (max-width: 1000px) {

@@ -7,6 +7,7 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import InfoIcon from "@mui/icons-material/Info";
 import AddIcon from "@mui/icons-material/Add";
+import ListIcon from "@mui/icons-material/List";
 
 const User = () => {
   const [value, setValue] = useState(0);
@@ -39,6 +40,10 @@ const User = () => {
     console.log("dodaj");
   };
 
+  const handleListAllUsersClick = () => {
+    console.log("izlistaj ih");
+  };
+
   return (
     <>
       <Box sx={{ width: 500 }}>
@@ -50,11 +55,20 @@ const User = () => {
             setValue(newValue);
           }}>
           {!isAuthenticated ? (
-            <BottomNavigationAction
-              label="New"
-              icon={<AddIcon />}
-              onClick={handleAddIconClick}
-            />
+            [
+              <BottomNavigationAction
+                label="New"
+                key="new"
+                icon={<AddIcon />}
+                onClick={handleAddIconClick}
+              />,
+              <BottomNavigationAction
+                label="Users"
+                key="users"
+                icon={<ListIcon />}
+                onClick={handleListAllUsersClick}
+              />,
+            ]
           ) : (
             <></>
           )}

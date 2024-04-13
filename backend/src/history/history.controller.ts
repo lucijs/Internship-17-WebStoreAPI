@@ -1,8 +1,24 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards, Req, ParseIntPipe } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  UseGuards,
+  Req,
+  ParseIntPipe,
+} from '@nestjs/common';
 import { HistoryService } from './history.service';
 import { CreateHistoryDto } from './dto/create-history.dto';
 import { UpdateHistoryDto } from './dto/update-history.dto';
-import { ApiCreatedResponse, ApiOkResponse, ApiTags } from '@nestjs/swagger';
+import {
+  ApiBearerAuth,
+  ApiCreatedResponse,
+  ApiOkResponse,
+  ApiTags,
+} from '@nestjs/swagger';
 import { HistoryEntity } from './entities/history.entity';
 import { UserAuthGuard } from 'src/users/user-auth.guard';
 import { AdminAuthGuard } from 'src/users/admin-auth.guard';
@@ -13,36 +29,44 @@ export class HistoryController {
   constructor(private readonly historyService: HistoryService) {}
 
   @UseGuards(UserAuthGuard)
+  @ApiBearerAuth()
   @Post()
-  @ApiCreatedResponse({type: HistoryEntity})
-  create(@Req() {user},@Body() createHistoryDto: CreateHistoryDto) {
-    return this.historyService.create({...createHistoryDto, userId:user.id});
+  @ApiCreatedResponse({ type: HistoryEntity })
+  create(@Req() { user }, @Body() createHistoryDto: CreateHistoryDto) {
+    return this.historyService.create({ ...createHistoryDto, userId: user.id });
   }
 
   @UseGuards(AdminAuthGuard)
+  @ApiBearerAuth()
   @Get()
-  @ApiOkResponse({type: HistoryEntity, isArray:true})
+  @ApiOkResponse({ type: HistoryEntity, isArray: true })
   findAll() {
     return this.historyService.findAll();
   }
 
   @UseGuards(UserAuthGuard)
+  @ApiBearerAuth()
   @Get(':id')
-  @ApiOkResponse({type: HistoryEntity})
+  @ApiOkResponse({ type: HistoryEntity })
   findOne(@Param('id', ParseIntPipe) id: number) {
     return this.historyService.findOne(id);
   }
 
   @UseGuards(AdminAuthGuard)
+  @ApiBearerAuth()
   @Patch(':id')
-  @ApiOkResponse({type: HistoryEntity})
-  update(@Param('id', ParseIntPipe) id: number, @Body() updateHistoryDto: UpdateHistoryDto) {
+  @ApiOkResponse({ type: HistoryEntity })
+  update(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() updateHistoryDto: UpdateHistoryDto,
+  ) {
     return this.historyService.update(id, updateHistoryDto);
   }
 
   @UseGuards(AdminAuthGuard)
+  @ApiBearerAuth()
   @Delete(':id')
-  @ApiOkResponse({type: HistoryEntity})
+  @ApiOkResponse({ type: HistoryEntity })
   remove(@Param('id', ParseIntPipe) id: number) {
     return this.historyService.remove(id);
   }
