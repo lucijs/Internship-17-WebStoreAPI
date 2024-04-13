@@ -94,7 +94,7 @@ export class ProductsController {
   @ApiBearerAuth()
   @Delete(':id')
   @ApiOkResponse({ type: ProductEntity })
-  async remove(@Req() { user }, @Param('id', ParseIntPipe) id: number) {
+  async remove(@Param('id', ParseIntPipe) id: number) {
     try {
       const updatedUser = await this.productsService.remove(id);
       return updatedUser;

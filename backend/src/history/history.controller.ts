@@ -9,6 +9,8 @@ import {
   UseGuards,
   Req,
   ParseIntPipe,
+  NotAcceptableException,
+  NotFoundException,
 } from '@nestjs/common';
 import { HistoryService } from './history.service';
 import { CreateHistoryDto } from './dto/create-history.dto';
@@ -32,26 +34,42 @@ export class HistoryController {
   @ApiBearerAuth()
   @Post()
   @ApiCreatedResponse({ type: HistoryEntity })
-  create(@Req() { user }, @Body() createHistoryDto: CreateHistoryDto) {
-    return this.historyService.create({ ...createHistoryDto, userId: user.id });
+  async create(@Req() { user }, @Body() createHistoryDto: CreateHistoryDto) {
+    const history = await this.historyService.create({
+      ...createHistoryDto,
+      userId: user.id,
+    });
+    if (!history) {
+      throw new NotAcceptableException("History couldn't be created.");
+    }
+    return history;
   }
 
   @UseGuards(AdminAuthGuard)
   @ApiBearerAuth()
   @Get()
   @ApiOkResponse({ type: HistoryEntity, isArray: true })
-  findAll() {
-    return this.historyService.findAll();
+  async findAll() {
+    const histories = await this.historyService.findAll();
+    if (!histories) {
+      throw new NotFoundException("History doesn't exist");
+    }
+    return histories;
   }
 
   @UseGuards(UserAuthGuard)
   @ApiBearerAuth()
   @Get(':id')
   @ApiOkResponse({ type: HistoryEntity })
-  findOne(@Param('id', ParseIntPipe) id: number) {
-    return this.historyService.findOne(id);
+  async findOne(@Param('id', ParseIntPipe) id: number) {
+    const history = await this.historyService.findOne(id);
+    if (!history) {
+      throw new NotFoundException("History doesn't exist.");
+    }
+    return history;
   }
 
+  //jel se ovo ikad koristi???
   @UseGuards(AdminAuthGuard)
   @ApiBearerAuth()
   @Patch(':id')
@@ -67,7 +85,12 @@ export class HistoryController {
   @ApiBearerAuth()
   @Delete(':id')
   @ApiOkResponse({ type: HistoryEntity })
-  remove(@Param('id', ParseIntPipe) id: number) {
-    return this.historyService.remove(id);
+  async remove(@Param('id', ParseIntPipe) id: number) {
+    try {
+      const deletedHistory = await this.historyService.remove(id);
+      return deletedHistory;
+    } catch {
+      throw new NotFoundException("The history wasn't deleted.");
+    }
   }
 }
