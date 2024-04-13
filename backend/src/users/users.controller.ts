@@ -70,7 +70,7 @@ export class UsersController {
   @ApiBearerAuth()
   @Get()
   @ApiOkResponse({ type: UserEntity, isArray: true })
-  async findAll(@Req() { user }) {
+  async findAll() {
     const users = await this.usersService.findAll();
     if (!users) {
       throw new NotFoundException('There are no users');
@@ -110,9 +110,9 @@ export class UsersController {
   @ApiBearerAuth()
   @Delete(':id')
   @ApiOkResponse({ type: UserEntity })
-  async remove(@Req() { user }) {
+  async remove(@Param('id', ParseIntPipe) id: number) {
     try {
-      const deletedUser = await this.usersService.remove(user.id);
+      const deletedUser = await this.usersService.remove(id);
       return deletedUser;
     } catch {
       throw new NotFoundException("The user wasn't deleted.");
