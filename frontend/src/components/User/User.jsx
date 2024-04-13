@@ -8,40 +8,55 @@ import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import InfoIcon from "@mui/icons-material/Info";
 import AddIcon from "@mui/icons-material/Add";
 import ListIcon from "@mui/icons-material/List";
+import Add from "../Add/Add";
 
 const User = () => {
-  const [value, setValue] = useState(0);
+  const [value, setValue] = useState(5);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [showForm, setShowForm] = useState(5);
 
   const handleHistoryClick = () => {
-    //samo moran izlistat sve kupljeno
-    console.log("History clicked");
+    setShowForm(2);
   };
 
   const handleFavoritesClick = () => {
-    //samo moran izlistat sve favorite
-    console.log("Favorites clicked");
+    setShowForm(3);
   };
 
   const handleCartClick = () => {
-    //samo moran izlistat sta je u kosarici
-    //i da se moze povecat br proizvoda
-    console.log("Cart clicked");
+    setShowForm(4);
   };
 
   const handleUserInfoClick = () => {
-    //svi podaci
-    //neki podaci se mogu minjat, npr adresa
-    console.log("User info clicked");
+    setShowForm(5);
   };
 
   const handleAddIconClick = () => {
     //napravit da se otvori nova forma di ce se upisivat svi podaci za novi proizvod
-    console.log("dodaj");
+    setShowForm(0);
   };
 
   const handleListAllUsersClick = () => {
-    console.log("izlistaj ih");
+    setShowForm(1);
+  };
+
+  const display = () => {
+    switch (showForm) {
+      case 0:
+        return <Add />;
+      case 1:
+        return <p>useri</p>;
+      case 2:
+        return <p>povijest</p>;
+      case 3:
+        return <p>favoriti</p>;
+      case 4:
+        return <p>kosarica</p>;
+      case 5:
+        return <p>user info</p>;
+      default:
+        return null;
+    }
   };
 
   return (
@@ -94,6 +109,7 @@ const User = () => {
           />
         </BottomNavigation>
       </Box>
+      <Box>{display()}</Box>
     </>
   );
 };
