@@ -8,6 +8,8 @@ import {
   Delete,
   Req,
   UseGuards,
+  NotFoundException,
+  ParseIntPipe,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { UpdateUserDto } from './dto/update-user.dto';
@@ -22,6 +24,7 @@ import { RegisterDto } from './dto/register.dto';
 import { LoginDto } from './dto/login.dto';
 import { AdminAuthGuard } from './admin-auth.guard';
 import { UserAuthGuard } from './user-auth.guard';
+import { NotFoundError } from 'rxjs';
 
 @Controller('users')
 @ApiTags('Users')
@@ -67,32 +70,52 @@ export class UsersController {
   @ApiBearerAuth()
   @Get()
   @ApiOkResponse({ type: UserEntity, isArray: true })
-  findAll(@Req() { user }) {
-    console.log('User from users controller findAll', user);
-    return this.usersService.findAll();
+  async findAll(@Req() { user }) {
+    const users = await this.usersService.findAll();
+    if (!users) {
+      throw new NotFoundException('There are no users');
+    }
+    return users;
   }
 
   @UseGuards(UserAuthGuard)
   @ApiBearerAuth()
   @Get(':id')
   @ApiOkResponse({ type: UserEntity })
-  findOne(@Req() { user }) {
-    return this.usersService.findOne(user.id);
+  async findOne(@Param('id', ParseIntPipe) id: number) {
+    const userId = await this.usersService.findOne(id);
+    if (!userId) {
+      throw new NotFoundException(`The user with this ${id} doesn't exist.`);
+    }
+    return userId;
   }
 
   @UseGuards(UserAuthGuard)
   @ApiBearerAuth()
   @Patch(':id')
   @ApiOkResponse({ type: UserEntity })
-  update(@Req() { user }, @Body() updateUserDto: UpdateUserDto) {
-    return this.usersService.update(user.id, updateUserDto);
+  async update(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() updateUserDto: UpdateUserDto,
+  ) {
+    try {
+      const updatedUser = await this.usersService.update(id, updateUserDto);
+      return updatedUser;
+    } catch {
+      throw new NotFoundException("The user wasn't updated.");
+    }
   }
 
   @UseGuards(UserAuthGuard)
   @ApiBearerAuth()
   @Delete(':id')
   @ApiOkResponse({ type: UserEntity })
-  remove(@Req() { user }) {
-    return this.usersService.remove(user.id);
+  async remove(@Req() { user }) {
+    try {
+      const deletedUser = await this.usersService.remove(user.id);
+      return deletedUser;
+    } catch {
+      throw new NotFoundException("The user wasn't deleted.");
+    }
   }
 }

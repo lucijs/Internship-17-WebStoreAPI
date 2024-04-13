@@ -32,7 +32,6 @@ const User = () => {
   };
 
   const handleAddIconClick = () => {
-    //napravit da se otvori nova forma di ce se upisivat svi podaci za novi proizvod
     setShowForm(0);
   };
 
