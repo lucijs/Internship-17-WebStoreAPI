@@ -71,6 +71,16 @@ export class ProductsController {
     return product;
   }
 
+  @Get('categories/:title')
+  @ApiOkResponse({ type: ProductEntity })
+  async findByCategory(@Param('category') category: number) {
+    const product = await this.productsService.findByCategory(category);
+    if (!product) {
+      throw new NotFoundException("Product doesn't exist");
+    }
+    return product;
+  }
+
   @UseGuards(AdminAuthGuard)
   @ApiBearerAuth()
   @Patch(':id')

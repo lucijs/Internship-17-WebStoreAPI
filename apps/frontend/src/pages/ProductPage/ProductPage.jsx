@@ -6,29 +6,50 @@ import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
+import { useAuthorizationBearer } from "../../providers/AuthorizationBearerProvider";
 
 const ProductPage = () => {
   const { id } = useParams();
   const [product, setProduct] = useState(null);
   const [products, setProducts] = useState([]);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const {token, isAdmin, isLogedIn} = useAuthorizationBearer();
 
   useEffect(() => {
-    fetch(`https://fakestoreapi.com/products/${id}`)
+    fetch(`/api/products/${id}`)
       .then((response) => response.json())
       .then((json) => setProduct(json));
   }, [id]);
 
   useEffect(() => {
     if (product) {
-      fetch(`https://fakestoreapi.com/products/category/${product.category}`)
+      fetch(`/api/products/categories/${product.category}`)
         .then((res) => res.json())
         .then((json) => setProducts(json));
     }
   }, [product]);
 
-  const addToCart = (e) => {
-    console.log("da");
+  const addToCart = () => {
+    console.log(token);
+    fetchCart(id);
+  };
+
+  const fetchCart = (productId) => {
+    fetch("/api/carts", {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`,
+      },
+      body: JSON.stringify({ productId }), 
+    })
+    .then((res) => res.json())
+    .then((json) => {
+      console.log(json.token);
+   })
+    .catch((error) => {
+      console.error('Error adding to cart:', error);
+    });
   };
 
   const addToWishlist = (e) => {
@@ -72,7 +93,7 @@ const ProductPage = () => {
             <ProductsDisplay
               products={products}
               searchTerm=""
-              selectedCategory={product.category}
+              selectedCategory={product.categoryId}
             />
           </>
         ) : (

@@ -1,5 +1,6 @@
 {
   "devDependencies": {
+    "dotenv": "^16.4.5",
     "turbo": "^1.13.2"
   },
   "scripts": {
@@ -11,5 +12,5 @@
   },
   "workspaces": [
     "apps/*"
-  ] 
+  ]
 }

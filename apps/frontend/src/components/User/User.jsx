@@ -9,10 +9,11 @@ import InfoIcon from "@mui/icons-material/Info";
 import AddIcon from "@mui/icons-material/Add";
 import ListIcon from "@mui/icons-material/List";
 import Add from "../Add/Add";
+import { useAuthorizationBearer } from "../../providers/AuthorizationBearerProvider";
 
 const User = () => {
   const [value, setValue] = useState(5);
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const {isAdmin, } = useAuthorizationBearer();
   const [showForm, setShowForm] = useState(5);
 
   const handleHistoryClick = () => {
@@ -68,7 +69,7 @@ const User = () => {
           onChange={(event, newValue) => {
             setValue(newValue);
           }}>
-          {!isAuthenticated ? (
+          {isAdmin ? (
             [
               <BottomNavigationAction
                 label="New"
@@ -84,8 +85,12 @@ const User = () => {
               />,
             ]
           ) : (
-            <></>
+            <BottomNavigationAction
+                label=""
+                key="empty"
+              />
           )}
+          
           <BottomNavigationAction
             label="History"
             icon={<RestoreIcon />}
@@ -106,6 +111,7 @@ const User = () => {
             icon={<InfoIcon />}
             onClick={handleUserInfoClick}
           />
+
         </BottomNavigation>
       </Box>
       <Box>{display()}</Box>

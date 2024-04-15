@@ -23,7 +23,7 @@ import {
 import { CategoryEntity } from './entities/category.entity';
 import { AdminAuthGuard } from 'src/users/admin-auth.guard';
 
-@Controller('categories')
+@Controller('/categories')
 @ApiTags('Categories')
 export class CategoriesController {
   constructor(private readonly categoriesService: CategoriesService) {}
@@ -44,7 +44,6 @@ export class CategoriesController {
   @ApiOkResponse({ type: CategoryEntity, isArray: true })
   async findAll() {
     const categories = await this.categoriesService.findAll();
-    return categories;
     if (!categories) {
       throw new NotFoundException("Categories don't exist.");
     }

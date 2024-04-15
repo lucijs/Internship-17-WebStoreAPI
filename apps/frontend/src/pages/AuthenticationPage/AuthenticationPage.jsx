@@ -6,9 +6,11 @@ import Tab from "@mui/material/Tab";
 import Box from "@mui/material/Box";
 import classes from "./index.module.css";
 import { useState } from "react";
+import { useAuthorizationBearer } from "../../providers/AuthorizationBearerProvider";
 
 const AuthenticationPage = () => {
   const [value, setValue] = useState(0);
+  const {token, isAdmin, isLogedIn, login, logout} = useAuthorizationBearer();
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   const handleChange = (event, newValue) => {
@@ -17,7 +19,7 @@ const AuthenticationPage = () => {
 
   return (
     <div className={classes.box}>
-      {!isAuthenticated ? (
+      {isAuthenticated? (
         <Box sx={{ p: 3 }}>
           <User />
         </Box>

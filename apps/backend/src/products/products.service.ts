@@ -30,6 +30,10 @@ export class ProductsService {
     return this.prisma.product.findMany({where:{title}});
   }
 
+  findByCategory(category: number) {
+    return this.prisma.product.findMany({where:{categoryId:category}});
+  }
+
   update(id: number, updateProductDto: UpdateProductDto) {
     const decimalPrice = new Decimal(updateProductDto.price);
     return this.prisma.product.update({

@@ -25,7 +25,7 @@ import { CartEntity } from './entities/cart.entity';
 import { UserAuthGuard } from 'src/users/user-auth.guard';
 import { AdminAuthGuard } from 'src/users/admin-auth.guard';
 
-@Controller('carts')
+@Controller('/carts')
 @UseGuards(UserAuthGuard)
 @ApiBearerAuth()
 @ApiTags('Carts')

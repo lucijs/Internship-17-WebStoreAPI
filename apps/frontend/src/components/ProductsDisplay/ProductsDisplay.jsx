@@ -10,7 +10,7 @@ const ProductDisplay = ({ products, searchTerm, selectedCategory }) => {
             .toLowerCase()
             .includes(searchTerm.toLowerCase());
           const categoryMatches = selectedCategory
-            ? product.category === selectedCategory
+            ? product.categoryId === selectedCategory 
             : true;
           return titleMatches && categoryMatches;
         })
