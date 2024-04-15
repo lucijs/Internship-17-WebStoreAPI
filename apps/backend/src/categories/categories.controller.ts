@@ -44,6 +44,7 @@ export class CategoriesController {
   @ApiOkResponse({ type: CategoryEntity, isArray: true })
   async findAll() {
     const categories = await this.categoriesService.findAll();
+    return categories;
     if (!categories) {
       throw new NotFoundException("Categories don't exist.");
     }

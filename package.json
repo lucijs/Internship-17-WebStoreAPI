@@ -1,0 +1,15 @@
+{
+  "devDependencies": {
+    "turbo": "^1.13.2"
+  },
+  "scripts": {
+    "dev": "turbo run dev",
+    "build": "turbo run build"
+  },
+  "prisma": {
+    "seed": "ts-node apps/backend/prisma/seed.ts"
+  },
+  "workspaces": [
+    "apps/*"
+  ] 
+}

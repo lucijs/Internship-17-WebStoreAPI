@@ -20,17 +20,17 @@ const ProductsPage = () => {
   }, []);
 
   const fetchCategories = () => {
-    fetch("https://fakestoreapi.com/products/categories")
+    fetch("/api/categories")
       .then((res) => res.json())
       .then((json) => {
         setCategories(json);
         setIsLoading(false);
       })
       .catch(() => setIsLoading(false));
-  };
+  }
 
   const fetchProducts = () => {
-    fetch("https://fakestoreapi.com/products")
+    fetch("/api/products")
       .then((res) => res.json())
       .then((json) => {
         setProducts(json);
@@ -55,8 +55,8 @@ const ProductsPage = () => {
                 value={selectedCategory}
                 onChange={(e) => setSelectedCategory(e.target.value)}>
                 {categories.map((category) => (
-                  <MenuItem key={category} value={category}>
-                    {category}
+                  <MenuItem key={category.id} value={category.name}>
+                    {category.name}
                   </MenuItem>
                 ))}
               </Select>
