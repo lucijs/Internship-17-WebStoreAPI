@@ -10,7 +10,8 @@ import { JwtStrategy } from './jwt.startegy';
   providers: [UsersService, JwtStrategy],
   imports: [PrismaModule,JwtModule.register({
     secret: process.env.JWT_SECRET,
-    signOptions: { expiresIn: '5d' },
-  }),]
+    signOptions: { expiresIn: '1m' },
+  }),],
+  exports: [UsersService]
 })
 export class UsersModule {}

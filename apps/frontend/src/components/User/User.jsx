@@ -10,10 +10,15 @@ import AddIcon from "@mui/icons-material/Add";
 import ListIcon from "@mui/icons-material/List";
 import Add from "../Add/Add";
 import { useAuthorizationBearer } from "../../providers/AuthorizationBearerProvider";
+import UserInfo from "./UserInfo/UserInfo";
+import GetAllUsers from "../Get/GetAllUsers/GetAllUsers";
+import GetHistory from "../Get/GetHistory/GetHistory";
+import GetFavourites from "../Get/GetFavourites/GetFavourites";
+import GetCart from "../Get/GetCart/GetCart";
 
 const User = () => {
   const [value, setValue] = useState(5);
-  const {isAdmin, } = useAuthorizationBearer();
+  const {isAdmin } = useAuthorizationBearer();
   const [showForm, setShowForm] = useState(5);
 
   const handleHistoryClick = () => {
@@ -45,15 +50,15 @@ const User = () => {
       case 0:
         return <Add />;
       case 1:
-        return <p>useri</p>;
+        return <GetAllUsers/>;
       case 2:
-        return <p>povijest</p>;
+        return <GetHistory/>;
       case 3:
-        return <p>favoriti</p>;
+        return <GetFavourites/>;
       case 4:
-        return <p>kosarica</p>;
+        return <GetCart/>;
       case 5:
-        return <p>user info</p>;
+        return <UserInfo/>;
       default:
         return null;
     }

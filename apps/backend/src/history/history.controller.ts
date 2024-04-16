@@ -45,12 +45,12 @@ export class HistoryController {
     return history;
   }
 
-  @UseGuards(AdminAuthGuard)
+  @UseGuards(UserAuthGuard)
   @ApiBearerAuth()
-  @Get()
+  @Get('users/:id')
   @ApiOkResponse({ type: HistoryEntity, isArray: true })
-  async findAll() {
-    const histories = await this.historyService.findAll();
+  async findAll(@Param('id', ParseIntPipe) id: number) {
+    const histories = await this.historyService.findAll(id);
     if (!histories) {
       throw new NotFoundException("History doesn't exist");
     }

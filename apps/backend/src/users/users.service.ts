@@ -79,6 +79,13 @@ export class UsersService {
     };
   }
 
+  async updateUserRole(userId: number, isAdmin: boolean): Promise<void> {
+    await this.prisma.user.update({
+      where: { id: userId },
+      data: { isAdmin }, 
+      });
+    }
+
   create(createUserDto: CreateUserDto) {
     return this.prisma.user.create({data: createUserDto});
   }

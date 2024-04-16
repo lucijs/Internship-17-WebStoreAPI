@@ -15,10 +15,28 @@ const AuthorizationBearerProvider = ({ children, secretKey}) => {
   const [token, setToken] = useState("");
   const [isAdmin, setIsAdmin] = useState(false);
 
-  const login = (newToken) => {
+  const login = (newToken, id) => {
     setIsLogedIn(true);
     setToken(newToken);
+    console.log("ID before conversion:", id);
+    const user = fetchUser(newToken, Number(id)); 
   };
+
+  const fetchUser = async (newToken, id)=>{
+    console.log(token);
+    await fetch(`/api/users/${id}`,{
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${newToken}`,
+      }
+    })
+    .then((res)=>res.json())
+    .then((json)=>{
+      console.log(json)
+      setIsAdmin(json.isAdmin);
+    })
+  }
 
   const logout = () => {
     setToken("");

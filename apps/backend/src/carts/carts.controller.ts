@@ -47,12 +47,12 @@ export class CartsController {
     return cart;
   }
 
-  @UseGuards(AdminAuthGuard)
+  @UseGuards(UserAuthGuard)
   @ApiBearerAuth()
-  @Get()
+  @Get('users/:id')
   @ApiOkResponse({ type: CartEntity, isArray: true })
-  async findAll() {
-    const carts = await this.cartsService.findAll();
+  async findAll(@Param('id', ParseIntPipe) id: number) {
+    const carts = await this.cartsService.findAll(id);
     if (!carts) {
       throw new NotFoundException("Carts don't exist.");
     }

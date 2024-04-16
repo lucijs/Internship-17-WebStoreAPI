@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsEmail, IsMobilePhone, IsNumber, IsString } from 'class-validator';
+import { IsEmail, IsMobilePhone, IsPhoneNumber, IsString } from 'class-validator';
 
 export class RegisterDto {
   @ApiProperty()
@@ -35,7 +35,7 @@ export class RegisterDto {
   numberAdress: string;
 
   @ApiProperty()
-  @IsMobilePhone()
+  @IsString()
   phone: string;
 
   @ApiProperty({ default: false })

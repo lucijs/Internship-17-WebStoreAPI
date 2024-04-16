@@ -11,8 +11,8 @@ export class WishlistsService {
     return this.prisma.wishlist.create({ data: createWishlistDto });
   }
 
-  findAll() {
-    return this.prisma.wishlist.findMany();
+  findAll(id:number) {
+    return this.prisma.wishlist.findMany({where:{userId:id}});
   }
 
   findOne(id: number) {

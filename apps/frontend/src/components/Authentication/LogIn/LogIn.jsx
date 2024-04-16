@@ -17,7 +17,6 @@ import { Link } from 'react-router-dom';
 const LogIn = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [username, setUsername] = useState("");
-  const [b,setB]=useState("");
   const {token, isAdmin, isLogedIn, login, logout} = useAuthorizationBearer();
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
@@ -31,11 +30,21 @@ const LogIn = () => {
   };
 
   const handlePasswordChanged = (event)=>{
-    setB(typeof(event.target.value));
     if(!username){
       //DODAT error handeling da user ovo ne može napravit
     }
     fetchLogin(username,event.target.value);
+  };
+
+  const decodeToken = (token) => {
+    try {
+      const decodedToken = JSON.parse(atob(token.split('.')[1]));
+      console.log(decodedToken);
+      return decodedToken.id;
+    } catch (error) {
+      console.error('Error decoding token:', error);
+      return null;
+    }
   };
 
   const fetchLogin = (username, password) => {
@@ -48,16 +57,14 @@ const LogIn = () => {
     })
     .then((res) => res.json())
     .then((json) => {
-      console.log(json.toke);
-      console.log(json);
-      login(json.token);
-      setB(json.token);
+      const decodedToken = decodeToken(json.token);
+      console.log(json.token)
+      login(json.token, decodedToken);
     })
     .catch((error) => {
       console.error('Error logging in:', error);
     });
   };
-
 
   return (
     <div className={classes.container}>
@@ -85,7 +92,6 @@ const LogIn = () => {
             }
             label="Password"
           />
-        <p>{b}</p>
         </FormControl>
       </div>
       <Link to="/">

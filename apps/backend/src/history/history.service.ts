@@ -11,8 +11,8 @@ export class HistoryService {
     return this.prisma.history.create({data: createHistoryDto});
   }
 
-  findAll() {
-    return this.prisma.history.findMany();
+  findAll(id:number) {
+    return this.prisma.history.findMany({where:{userId:id}});
   }
 
   findOne(id: number) {

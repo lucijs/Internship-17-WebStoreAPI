@@ -6,10 +6,11 @@ import Tab from "@mui/material/Tab";
 import Box from "@mui/material/Box";
 import classes from "./index.module.css";
 import { useState } from "react";
+import AddCategory from "./AddCategory/AddCategory";
+import AddProduct from "./AddProduct/AddProduct";
 
 const Add = () => {
   const [value, setValue] = useState(0);
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -51,12 +52,12 @@ const Add = () => {
         <>
           {value === 0 && (
             <Box sx={{ p: 3 }}>
-              <LogIn />
+              <AddCategory/>
             </Box>
           )}
           {value === 1 && (
             <Box sx={{ p: 3 }}>
-              <Register />
+              <AddProduct />
             </Box>
           )}
         </>

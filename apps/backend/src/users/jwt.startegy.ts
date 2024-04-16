@@ -1,7 +1,8 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { PassportStrategy } from '@nestjs/passport';
 import { ExtractJwt, Strategy } from 'passport-jwt';
 import { UsersService } from './users.service';
+import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
@@ -13,15 +14,14 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     });
   }
 
+  async validate(payload: any) {
+    const user = await this.usersService.findOne(payload.id);
 
-  async validate(payload) {
-    const user = await this.usersService.findOne(payload.id); 
-
-    if (user && user.isAdmin) {
-      payload.role = 'admin';
-    } else {
-      payload.role = 'user';
+    if (!user) {
+      throw new UnauthorizedException('Invalid credentials');
     }
+    payload.role = user.isAdmin ? 'admin' : 'user';
+
     return payload;
   }
 }

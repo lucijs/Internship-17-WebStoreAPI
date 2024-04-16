@@ -11,7 +11,6 @@ import { useAuthorizationBearer } from "../../providers/AuthorizationBearerProvi
 const AuthenticationPage = () => {
   const [value, setValue] = useState(0);
   const {token, isAdmin, isLogedIn, login, logout} = useAuthorizationBearer();
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -19,7 +18,7 @@ const AuthenticationPage = () => {
 
   return (
     <div className={classes.box}>
-      {isAuthenticated? (
+      {isLogedIn? (
         <Box sx={{ p: 3 }}>
           <User />
         </Box>

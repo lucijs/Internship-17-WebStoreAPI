@@ -11,8 +11,8 @@ export class CartsService {
     return this.prisma.cart.create({data: createCartDto});
   }
 
-  findAll() {
-    return this.prisma.cart.findMany();
+  findAll(id:number) {
+    return this.prisma.cart.findMany({where:{userId:id}});
   }
 
   findOne(id: number) {

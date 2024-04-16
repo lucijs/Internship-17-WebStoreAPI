@@ -50,12 +50,12 @@ export class WishlistsController {
     }
   }
 
-  @UseGuards(AdminAuthGuard)
+  @UseGuards(UserAuthGuard)
   @ApiBearerAuth()
-  @Get()
+  @Get('users/:id')
   @ApiOkResponse({ type: WishlistEntity, isArray: true })
-  async findAll() {
-    const wishlisted = await this.wishlistsService.findAll();
+  async findAll(@Param('id', ParseIntPipe) id: number) {
+    const wishlisted = await this.wishlistsService.findAll(id);
     if (!wishlisted) {
       throw new NotFoundException('No products are wishlisted');
     }
